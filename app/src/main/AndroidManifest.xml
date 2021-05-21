@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HelpingHand">
-        <activity android:name=".regularProfile"></activity>
+        <activity android:name=".SignUpBusiness"></activity>
+        <activity android:name=".SignUpRegular" />
+        <activity android:name=".SignUpChoice" />
+        <activity android:name=".regularProfile" />
         <activity android:name=".Login" />
         <activity android:name=".Feed" />
         <activity android:name=".MainActivity">
