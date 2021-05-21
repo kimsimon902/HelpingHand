@@ -19,7 +19,7 @@
     <EditText
         android:drawableStart="@drawable/ic_email"
         android:drawablePadding="12dp"
-        android:id="@+id/loginEmailEt"
+        android:id="@+id/signupRegNameEt"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
@@ -79,7 +79,7 @@
             android:text="Don't have an account?" />
 
         <TextView
-            android:id="@+id/loginCreateTv2"
+            android:id="@+id/loginSignUpTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
