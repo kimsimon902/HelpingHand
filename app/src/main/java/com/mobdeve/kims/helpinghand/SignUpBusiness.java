@@ -3,6 +3,7 @@ package com.mobdeve.kims.helpinghand;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -124,8 +125,10 @@ public class SignUpBusiness extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        Toast.makeText(SignUpBusiness.this, "User has been registered!", Toast.LENGTH_LONG).show();
                                         progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(SignUpBusiness.this, "User has been registered!", Toast.LENGTH_LONG).show();
+                                        Intent i = new Intent(SignUpBusiness.this, Login.class);
+                                        startActivity(i);
 
                                         //redirect to login next
                                     }else{
