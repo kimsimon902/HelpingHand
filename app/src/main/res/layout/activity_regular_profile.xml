@@ -60,7 +60,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/profRegUser"
+        android:id="@+id/profRegUserTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -70,7 +70,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/profRegBio"
+        android:id="@+id/profRegBioTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

@@ -32,12 +32,16 @@
             android:text="Helping Hand"
             android:textColor="#0B0A0A" />
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="180sp"
-            app:srcCompat="@drawable/helpinghand" />
+        <TextView
+            android:id="@+id/usernameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150sp"
+            android:layout_marginTop="10sp"
+            android:text="Simon"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:textStyle="normal" />
 
     </LinearLayout>
 
