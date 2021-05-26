@@ -4,7 +4,7 @@ import android.net.Uri;
 
 public class Post {
 
-    public String name, description, imageName, username;
+    public String name, caption, image_name, username;
 
 
     public Post(){
@@ -14,9 +14,9 @@ public class Post {
     public Post(String name, String description, String imageName, String username){
 
         this.username = username;
-        this.description = description;
+        this.caption = description;
         this.name = name;
-        this.imageName = imageName;
+        this.image_name = imageName;
     }
 
     public String getUsername(){
@@ -24,11 +24,11 @@ public class Post {
     }
 
     public String getCaption(){
-        return description;
+        return caption;
     }
 
     public String getImageName(){
-        return imageName;
+        return image_name;
     }
 
 }

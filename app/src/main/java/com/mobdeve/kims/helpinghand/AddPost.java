@@ -58,7 +58,7 @@ public class AddPost extends AppCompatActivity {
 
 
     //FOR image name and uri
-    private String imageName;
+    private String image_name;
     private Uri localUri;
 
     @Override
@@ -139,7 +139,7 @@ public class AddPost extends AppCompatActivity {
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
 
-                imageName = f.getName();
+                image_name = f.getName();
                 localUri = contentUri;
 
 //                uploadImageToFirebase(f.getName(), contentUri);
@@ -153,7 +153,7 @@ public class AddPost extends AppCompatActivity {
                 String imageFileName = "JPEG_" + timestamp + "." + getFileExt(contentUri);
                 postIv.setImageURI(contentUri);
 
-                imageName = imageFileName;
+                image_name = imageFileName;
                 localUri = contentUri;
 //                uploadImageToFirebase(imageFileName, contentUri);
             }
@@ -231,10 +231,14 @@ public class AddPost extends AppCompatActivity {
     }
 
     private void createPost(){
-        uploadImageToFirebase(imageName, localUri);
+        uploadImageToFirebase(image_name, localUri);
 
-        post = new Post(name, desc, imageName, username);
+        post = new Post(name, desc, image_name, username);
         myRef.setValue(post);
+
+        Intent intent = new Intent(AddPost.this, Feed.class);
+        startActivity(intent);
+        finish();
     }
 
 

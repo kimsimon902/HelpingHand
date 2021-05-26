@@ -61,7 +61,7 @@ public class SignUpBusiness extends AppCompatActivity {
     private StorageReference storageReference;
 
     //FOR image name and uri
-    private String imageName;
+    private String image_name;
     private Uri localUri;
     private String firebaseUri;
 
@@ -151,7 +151,7 @@ public class SignUpBusiness extends AppCompatActivity {
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
 
-                imageName = f.getName();
+                image_name = f.getName();
                 localUri = contentUri;
 
 //                uploadImageToFirebase(f.getName(), contentUri);
@@ -165,7 +165,7 @@ public class SignUpBusiness extends AppCompatActivity {
                 String imageFileName = "JPEG_" + timestamp + "." + getFileExt(contentUri);
                 signupBusSelectedImageIv.setImageURI(contentUri);
 
-                imageName = imageFileName;
+                image_name = imageFileName;
                 localUri = contentUri;
 //                uploadImageToFirebase(imageFileName, contentUri);
             }
@@ -300,20 +300,20 @@ public class SignUpBusiness extends AppCompatActivity {
             return;
         }
 
-        if(imageName == null && localUri == null) {
+        if(image_name == null && localUri == null) {
             Toast.makeText(SignUpBusiness.this, "Image is required!", Toast.LENGTH_LONG).show();
             return;
         }
 
 
-        uploadImageToFirebase(imageName, localUri);
+        uploadImageToFirebase(image_name, localUri);
         progressBar.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            User user = new User(name, email, desc, true, imageName);
+                            User user = new User(name, email, desc, true, image_name);
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
