@@ -27,7 +27,7 @@ public class Post {
         return caption;
     }
 
-    public String getImageName(){
+    public String getImage_name(){
         return image_name;
     }
 

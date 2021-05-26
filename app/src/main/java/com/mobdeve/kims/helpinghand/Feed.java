@@ -2,6 +2,7 @@ package com.mobdeve.kims.helpinghand;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 public class Feed extends AppCompatActivity {
 
     private TextView usernameTv;
-    private String username, bio, isOwner;
+    private String username, bio, isOwner,uid;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference myRef;
@@ -50,8 +51,10 @@ public class Feed extends AppCompatActivity {
         usernameTv = findViewById(R.id.usernameTv);
         postsRv = findViewById(R.id.rv_posts);
 
+        this.postsRv.setLayoutManager(new LinearLayoutManager(this));
         myAdapter = new FeedAdapter(posts);
         this.postsRv.setAdapter(this.myAdapter);
+
 
         usernameTv.setText(i.getStringExtra("username"));
 

@@ -118,7 +118,7 @@ public class Login extends AppCompatActivity {
                             String bio = snapshot.child("description").getValue().toString();
                             String isOwner = snapshot.child("isOwner").getValue().toString();
 
-                            Intent intent = new Intent(Login.this, AddPost.class);
+                            Intent intent = new Intent(Login.this, Feed.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("username", username);
                             intent.putExtra("bio", bio);

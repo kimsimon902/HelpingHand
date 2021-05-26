@@ -234,7 +234,8 @@ public class AddPost extends AppCompatActivity {
         uploadImageToFirebase(image_name, localUri);
 
         post = new Post(name, desc, image_name, username);
-        myRef.setValue(post);
+
+        myRef.push().setValue(post);
 
         Intent intent = new Intent(AddPost.this, Feed.class);
         startActivity(intent);
