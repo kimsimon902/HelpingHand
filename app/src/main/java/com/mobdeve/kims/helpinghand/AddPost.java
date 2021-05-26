@@ -48,7 +48,7 @@ public class AddPost extends AppCompatActivity {
     public static final int CAMERA_REQUEST_CODE = 102;
     public static final int GALLERY_REQUEST_CODE = 105;
     private Post post;
-    private String name, desc;
+    private String name, desc, username;
 
 
     private StorageReference storageReference;
@@ -79,7 +79,8 @@ public class AddPost extends AppCompatActivity {
         galBtn = findViewById(R.id.addPostGalBtn);
 
 
-
+        Intent i = getIntent();
+        username = i.getStringExtra("username");
 
         camBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,7 +233,7 @@ public class AddPost extends AppCompatActivity {
     private void createPost(){
         uploadImageToFirebase(imageName, localUri);
 
-        post = new Post(name, desc, imageName);
+        post = new Post(name, desc, imageName, username);
         myRef.setValue(post);
     }
 

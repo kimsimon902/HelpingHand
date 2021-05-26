@@ -2,9 +2,11 @@ package com.mobdeve.kims.helpinghand;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,10 +14,26 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
 public class Feed extends AppCompatActivity {
 
     private TextView usernameTv;
     private String username, bio, isOwner;
+
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference myRef;
+
+    private ArrayList<Post> posts = new ArrayList();
+
+    private RecyclerView postsRv;
+    private FeedAdapter myAdapter;
 
 
     @Override
@@ -30,8 +48,37 @@ public class Feed extends AppCompatActivity {
         isOwner = i.getStringExtra("owner");
 
         usernameTv = findViewById(R.id.usernameTv);
+        postsRv = findViewById(R.id.rv_posts);
+
+        myAdapter = new FeedAdapter(posts);
+        this.postsRv.setAdapter(this.myAdapter);
 
         usernameTv.setText(i.getStringExtra("username"));
+
+        this.firebaseDatabase = FirebaseDatabase.getInstance();
+        this.myRef = this.firebaseDatabase.getReference("Posts");
+
+        this.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> keys = new ArrayList<>();
+                for(DataSnapshot keyNode : dataSnapshot.getChildren()) {
+                    keys.add(keyNode.getKey());
+                    Post post = keyNode.getValue(Post.class);
+                    posts.add(post);
+
+                    // Once done loading data, notify the adapter that data has loaded in
+                    myAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("Debug", "onDataChange: canceled");
+            }
+        });
+
+
     }
 
 
