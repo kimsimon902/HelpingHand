@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Sign Up"
+            android:text="Add Product/Service"
             android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -35,58 +35,11 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/custom_input"
             android:ems="10"
-            android:hint="Name"
+            android:hint="Product/Service Name"
             android:inputType="text"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:singleLine="true" />
-
-        <EditText
-            android:id="@+id/signupRegEmailEt"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/custom_input"
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:singleLine="true" />
-
-        <EditText
-            android:id="@+id/signupRegPassEt"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/custom_input"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:singleLine="true" />
-
-        <EditText
-            android:id="@+id/signupRegConfirmEt"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/custom_input"
-            android:ems="10"
-            android:hint="Confirm Password"
-            android:inputType="textPassword"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:singleLine="true" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Tell us something about yourself"
-            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/addPostDescEt"
@@ -109,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Profile Picture"
+            android:text="Product/Service Photo"
             android:textSize="16sp" />
 
         <ImageView
@@ -162,7 +115,7 @@
             android:layout_marginBottom="10dp"
             android:background="#84A9AC"
             android:gravity="center_horizontal"
-            android:text="Create Account"
+            android:text="Create Product"
             app:backgroundTint="#84A9AC" />
 
     </LinearLayout>
