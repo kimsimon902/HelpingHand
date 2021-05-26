@@ -4,7 +4,7 @@ import android.net.Uri;
 
 public class User {
 
-    public String username, email, description, imageName;
+    public String username, email, description, image_name;
     public Boolean isOwner;
 
 
@@ -17,7 +17,7 @@ public class User {
         this.email = email;
         this.description = description;
         this.isOwner = isOwner;
-        this.imageName = imageName;
+        this.image_name = imageName;
     }
 
 

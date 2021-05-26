@@ -58,7 +58,7 @@ public class SignUpRegular extends AppCompatActivity {
     private StorageReference storageReference;
 
     //FOR image name and uri
-    private String imageName;
+    private String image_name;
     private Uri localUri;
     private String firebaseUri;
 
@@ -151,7 +151,7 @@ public class SignUpRegular extends AppCompatActivity {
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
 
-                imageName = f.getName();
+                image_name = f.getName();
                 localUri = contentUri;
 
 //                uploadImageToFirebase(f.getName(), contentUri);
@@ -165,7 +165,7 @@ public class SignUpRegular extends AppCompatActivity {
                 String imageFileName = "JPEG_" + timestamp + "." + getFileExt(contentUri);
                 signupRegSelectedImageIv.setImageURI(contentUri);
 
-                imageName = imageFileName;
+                image_name = imageFileName;
                 localUri = contentUri;
 
 
@@ -299,19 +299,19 @@ public class SignUpRegular extends AppCompatActivity {
             return;
         }
 
-        if(imageName == null && localUri == null) {
+        if(image_name == null && localUri == null) {
             Toast.makeText(SignUpRegular.this, "Image is required!", Toast.LENGTH_LONG).show();
             return;
         }
 
-        uploadImageToFirebase(imageName, localUri);
+        uploadImageToFirebase(image_name, localUri);
         progressBar.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            User user = new User(name, email, desc, false, imageName);
+                            User user = new User(name, email, desc, false, image_name);
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
