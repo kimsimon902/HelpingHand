@@ -57,6 +57,7 @@ public class SignUpBusiness extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+
     private StorageReference storageReference;
 
     //FOR image name and uri
