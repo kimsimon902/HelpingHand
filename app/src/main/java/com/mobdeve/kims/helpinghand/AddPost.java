@@ -78,6 +78,7 @@ public class AddPost extends AppCompatActivity {
         camBtn = findViewById(R.id.addPostCamBtn);
         galBtn = findViewById(R.id.addPostGalBtn);
 
+        postIv.setVisibility(View.GONE);
 
         Intent i = getIntent();
         username = i.getStringExtra("username");
@@ -142,7 +143,7 @@ public class AddPost extends AppCompatActivity {
 
                 image_name = f.getName();
                 localUri = contentUri;
-
+                postIv.setVisibility(View.VISIBLE);
 //                uploadImageToFirebase(f.getName(), contentUri);
             }
         }
@@ -156,6 +157,7 @@ public class AddPost extends AppCompatActivity {
 
                 image_name = imageFileName;
                 localUri = contentUri;
+                postIv.setVisibility(View.VISIBLE);
 //                uploadImageToFirebase(imageFileName, contentUri);
             }
         }
@@ -234,9 +236,12 @@ public class AddPost extends AppCompatActivity {
     private void createPost(){
         uploadImageToFirebase(image_name, localUri);
 
-        post = new Post(name, desc, image_name, username, uid);
 
-        myRef.push().setValue(post);
+        String key = myRef.push().getKey();
+        post = new Post(name, desc, image_name, username, uid, key);
+        myRef.child(key).setValue(post);
+
+
 
         Intent intent = new Intent(AddPost.this, Feed.class);
         intent.putExtra("username", username);

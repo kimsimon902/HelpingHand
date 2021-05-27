@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 public class Feed extends AppCompatActivity {
 
-    private TextView usernameTv;
+    private TextView usernameTv, addcmntTv;
     private String username, bio, isOwner,uid,dp;
     private ImageView userdp,logo;
 
@@ -71,14 +71,16 @@ public class Feed extends AppCompatActivity {
         postsRv = findViewById(R.id.rv_posts);
         userdp = findViewById(R.id.userdp_Iv);
         logo = findViewById(R.id.logo);
-
+        addcmntTv = findViewById(R.id.tv_addComment);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
         this.postsRv.setLayoutManager(linearLayoutManager);
         myAdapter = new FeedAdapter(posts, uid);
         this.postsRv.setAdapter(this.myAdapter);
         myDpProcess();
+        myAdapter.notifyDataSetChanged();
 
        // usernameTv.setText(i.getStringExtra("username"));
 
@@ -120,6 +122,8 @@ public class Feed extends AppCompatActivity {
             }
 
         });
+
+
 
     }
 

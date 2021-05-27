@@ -40,6 +40,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
         holder.setImage("images/" + this.data.get(position).getImage_name());
         holder.setdps(this.data.get(position).getUid());
 
+
     }
 
     @Override

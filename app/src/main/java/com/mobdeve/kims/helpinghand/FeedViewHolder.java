@@ -1,5 +1,6 @@
 package com.mobdeve.kims.helpinghand;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -48,12 +49,25 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
         this.usernameTv = itemView.findViewById(R.id.tv_username);
         this.captionTv = itemView.findViewById(R.id.tv_caption);
         this.commentsTv = itemView.findViewById(R.id.tv_comments);
+        commentsTv.setVisibility(View.GONE);
         this.addcmntTv = itemView.findViewById(R.id.tv_addComment);
         this.imageIv = itemView.findViewById(R.id.iv_image);
         this.postdp = itemView.findViewById(R.id.iv_avatar);
         this.userdp = itemView.findViewById(R.id.userdp_Iv);
 
-        commentsTv.setVisibility(View.GONE);
+        addcmntTv.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+
+
+            }
+
+        });
+
+
+
 
     }
 
