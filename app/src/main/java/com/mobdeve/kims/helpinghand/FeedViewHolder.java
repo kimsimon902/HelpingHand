@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,11 +33,12 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
     private TextView usernameTv, captionTv, commentsTv, addcmntTv;
-    private ImageView imageIv, postdp;
+    private ImageView imageIv, postdp, userdp;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference myRef;
-    private String imageName;
-
+    private String imageName, mydp;
+    private FirebaseAuth mAuth;
+    private FirebaseUser crntUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
 
@@ -48,8 +51,9 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
         this.addcmntTv = itemView.findViewById(R.id.tv_addComment);
         this.imageIv = itemView.findViewById(R.id.iv_image);
         this.postdp = itemView.findViewById(R.id.iv_avatar);
+        this.userdp = itemView.findViewById(R.id.userdp_Iv);
 
-
+        commentsTv.setVisibility(View.GONE);
 
     }
 
@@ -86,7 +90,7 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
 
     public void setdps(String uid) {
 
-        System.out.println(uid);
+
         this.firebaseDatabase = FirebaseDatabase.getInstance();
         this.myRef = this.firebaseDatabase.getReference("Users").child(uid);
 
@@ -95,6 +99,7 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user= dataSnapshot.getValue(User.class);
+
                 dpProcess(user);
 
             }
@@ -115,7 +120,7 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
     public void dpProcess(User user){
 
         imageName = user.getImage_name();
-        System.out.println(imageName);
+
         if(imageName != null ){
             // With the storageReference, get the image based on its name
             StorageReference imageRef = this.storageRef.child("images/" + imageName);
@@ -139,5 +144,6 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
         }
 
     }
+
 
 }

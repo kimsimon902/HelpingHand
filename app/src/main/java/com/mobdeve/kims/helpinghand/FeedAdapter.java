@@ -14,9 +14,11 @@ import java.util.ArrayList;
 public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
 
     private ArrayList<Post> data;
+    private String uid;
 
-    public FeedAdapter(ArrayList<Post> data) {
+    public FeedAdapter(ArrayList<Post> data, String uid) {
         this.data = data;
+        this.uid = uid;
     }
 
     @NonNull
@@ -36,8 +38,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
         holder.setUsername(this.data.get(position).getUsername());
         holder.setCaption(this.data.get(position).getCaption());
         holder.setImage("images/" + this.data.get(position).getImage_name());
-
         holder.setdps(this.data.get(position).getUid());
+
     }
 
     @Override

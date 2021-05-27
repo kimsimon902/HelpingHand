@@ -83,6 +83,7 @@ public class SignUpRegular extends AppCompatActivity {
         signupRegGalBtn = findViewById(R.id.addPostGalBtn);
 
         signupRegSelectedImageIv = findViewById(R.id.addPostSelectedImageIv);
+        signupRegSelectedImageIv.setVisibility(View.GONE);
 
         progressBar = findViewById(R.id.progressBar);
 
@@ -153,7 +154,7 @@ public class SignUpRegular extends AppCompatActivity {
 
                 image_name = f.getName();
                 localUri = contentUri;
-
+                signupRegSelectedImageIv.setVisibility(View.VISIBLE);
 //                uploadImageToFirebase(f.getName(), contentUri);
             }
         }
@@ -168,10 +169,11 @@ public class SignUpRegular extends AppCompatActivity {
                 image_name = imageFileName;
                 localUri = contentUri;
 
-
+                signupRegSelectedImageIv.setVisibility(View.VISIBLE);
 //                uploadImageToFirebase(imageFileName, contentUri);
             }
         }
+
     }
 
 

@@ -40,21 +40,10 @@
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="250dp">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                app:cardCornerRadius="250dp">
-
-                <ImageView
-                    android:id="@+id/userdp_Iv"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="180sp"
-                    app:srcCompat="@drawable/grpo2" />
-
-
-            </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/userdp_Iv"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
 
         </androidx.cardview.widget.CardView>
 

@@ -85,6 +85,7 @@ public class SignUpBusiness extends AppCompatActivity {
         signupBusGalBtn = findViewById(R.id.signupBusGalBtn);
 
         signupBusSelectedImageIv = findViewById(R.id.signupBusSelectedImageIv);
+        signupBusSelectedImageIv.setVisibility(View.GONE);
 
         progressBar = findViewById(R.id.progressBar);
 
@@ -107,6 +108,7 @@ public class SignUpBusiness extends AppCompatActivity {
             public void onClick(View v) {
                 Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(gallery, GALLERY_REQUEST_CODE);
+
             }
         });
 
@@ -153,7 +155,7 @@ public class SignUpBusiness extends AppCompatActivity {
 
                 image_name = f.getName();
                 localUri = contentUri;
-
+                signupBusSelectedImageIv.setVisibility(View.VISIBLE);
 //                uploadImageToFirebase(f.getName(), contentUri);
             }
         }
@@ -168,7 +170,9 @@ public class SignUpBusiness extends AppCompatActivity {
                 image_name = imageFileName;
                 localUri = contentUri;
 //                uploadImageToFirebase(imageFileName, contentUri);
+                signupBusSelectedImageIv.setVisibility(View.VISIBLE);
             }
+
         }
     }
 
