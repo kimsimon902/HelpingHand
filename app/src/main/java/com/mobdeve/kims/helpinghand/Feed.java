@@ -20,16 +20,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
 public class Feed extends AppCompatActivity {
 
     private TextView usernameTv;
-    private String username, bio, isOwner,uid;
+    private String username, bio, isOwner,uid,dp;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference myRef;
+    private StorageReference storageReference;
 
     private ArrayList<Post> posts = new ArrayList();
 
@@ -47,8 +50,10 @@ public class Feed extends AppCompatActivity {
         username = i.getStringExtra("username");
         bio = i.getStringExtra("bio");
         isOwner = i.getStringExtra("owner");
+        dp = i.getStringExtra("dp");
+        uid = i.getStringExtra("uid");
 
-        usernameTv = findViewById(R.id.usernameTv);
+        //usernameTv = findViewById(R.id.usernameTv);
         postsRv = findViewById(R.id.rv_posts);
 
         this.postsRv.setLayoutManager(new LinearLayoutManager(this));
@@ -56,10 +61,11 @@ public class Feed extends AppCompatActivity {
         this.postsRv.setAdapter(this.myAdapter);
 
 
-        usernameTv.setText(i.getStringExtra("username"));
+       // usernameTv.setText(i.getStringExtra("username"));
 
         this.firebaseDatabase = FirebaseDatabase.getInstance();
         this.myRef = this.firebaseDatabase.getReference("Posts");
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         this.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

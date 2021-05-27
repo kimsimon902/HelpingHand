@@ -117,12 +117,15 @@ public class Login extends AppCompatActivity {
                             String username = snapshot.child("username").getValue().toString();
                             String bio = snapshot.child("description").getValue().toString();
                             String isOwner = snapshot.child("isOwner").getValue().toString();
+                            String dp = snapshot.child("image_name").getValue().toString();
 
                             Intent intent = new Intent(Login.this, Feed.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("username", username);
                             intent.putExtra("bio", bio);
                             intent.putExtra("isowner", isOwner);
+                            intent.putExtra("dp", dp);
+                            intent.putExtra("uid", uid);
                             startActivity(intent);
                             finish();
                         }

@@ -4,19 +4,20 @@ import android.net.Uri;
 
 public class Post {
 
-    public String name, caption, image_name, username;
+    public String name, caption, image_name, username, uid;
 
 
     public Post(){
 
     }
 
-    public Post(String name, String description, String imageName, String username){
+    public Post(String name, String description, String imageName, String username, String uid){
 
         this.username = username;
         this.caption = description;
         this.name = name;
         this.image_name = imageName;
+        this.uid = uid;
     }
 
     public String getUsername(){
@@ -31,4 +32,7 @@ public class Post {
         return image_name;
     }
 
+    public String getUid(){
+        return uid;
+    }
 }

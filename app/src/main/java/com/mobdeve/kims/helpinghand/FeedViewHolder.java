@@ -12,17 +12,31 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import com.squareup.picasso.Picasso;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class FeedViewHolder extends RecyclerView.ViewHolder {
 
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
     private TextView usernameTv, captionTv, commentsTv, addcmntTv;
-    private ImageView imageIv, dp;
+    private ImageView imageIv, postdp;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference myRef;
+    private String imageName;
+
+
 
 
     public FeedViewHolder(@NonNull View itemView) {
@@ -33,7 +47,9 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
         this.commentsTv = itemView.findViewById(R.id.tv_comments);
         this.addcmntTv = itemView.findViewById(R.id.tv_addComment);
         this.imageIv = itemView.findViewById(R.id.iv_image);
-        this.dp = itemView.findViewById(R.id.iv_avatar);
+        this.postdp = itemView.findViewById(R.id.iv_avatar);
+
+
 
     }
 
@@ -64,7 +80,64 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
+
     }
 
+
+    public void setdps(String uid) {
+
+        System.out.println(uid);
+        this.firebaseDatabase = FirebaseDatabase.getInstance();
+        this.myRef = this.firebaseDatabase.getReference("Users").child(uid);
+
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user= dataSnapshot.getValue(User.class);
+                dpProcess(user);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        myRef.addValueEventListener(postListener);
+
+
+
+
+    }
+
+
+    public void dpProcess(User user){
+
+        imageName = user.getImage_name();
+        System.out.println(imageName);
+        if(imageName != null ){
+            // With the storageReference, get the image based on its name
+            StorageReference imageRef = this.storageRef.child("images/" + imageName);
+            // Download the image and display via Picasso accordingly
+            imageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if(task.isSuccessful()) {
+                        Log.d("Debug", "onComplete: got image");
+                        Picasso.get()
+                                .load(task.getResult())
+                                .error(R.mipmap.ic_launcher)
+                                .placeholder(R.mipmap.ic_launcher)
+                                .into(postdp);
+                    } else {
+                        Log.d("Debug", "onComplete: did not get image");
+                    }
+                }
+            });
+
+        }
+
+    }
 
 }

@@ -21,4 +21,14 @@ public class User {
     }
 
 
+    public String getImage_name()
+    {
+        return image_name;
+    }
+
+    public String getusername(){
+        return username;
+    }
+
+
 }
