@@ -246,6 +246,7 @@ public class AddPost extends AppCompatActivity {
         Intent intent = new Intent(AddPost.this, Feed.class);
         intent.putExtra("username", username);
         intent.putExtra("uid", uid);
+
         startActivity(intent);
         finish();
     }

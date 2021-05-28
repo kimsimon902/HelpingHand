@@ -33,7 +33,13 @@ public class Post {
         return image_name;
     }
 
+    //user id of person who posted
     public String getUid(){
         return uid;
     }
+
+    public String getKey(){
+        return key;
+    }
+
 }

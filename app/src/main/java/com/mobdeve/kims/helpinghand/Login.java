@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.admin.SystemUpdatePolicy;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.renderscript.Sampler;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -33,14 +35,26 @@ public class Login extends AppCompatActivity {
     private Button loginLogBtn;
     private TextView loginSignUpTv;
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth, auth;
     private ProgressBar progressBar;
 
+    private String dp;
     private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        auth = FirebaseAuth.getInstance();
+
+        if (auth.getCurrentUser() != null) {
+
+            Intent intent = new Intent(Login.this, Feed.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
+
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
@@ -117,7 +131,7 @@ public class Login extends AppCompatActivity {
                             String username = snapshot.child("username").getValue().toString();
                             String bio = snapshot.child("description").getValue().toString();
                             String isOwner = snapshot.child("isOwner").getValue().toString();
-                            String dp = snapshot.child("image_name").getValue().toString();
+                            dp = snapshot.child("image_name").getValue().toString();
 
                             Intent intent = new Intent(Login.this, Feed.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -146,6 +160,7 @@ public class Login extends AppCompatActivity {
         });
 
     }
+
 
 
 }

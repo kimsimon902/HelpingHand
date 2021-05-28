@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 public class Feed extends AppCompatActivity {
 
     private TextView usernameTv, addcmntTv;
-    private String username, bio, isOwner,uid,dp;
+    private String username, bio, isOwner,uid,dp, dp_Sp, username_Sp, bio_Sp, isOwner_Sp;
     private ImageView userdp,logo;
 
     private FirebaseDatabase firebaseDatabase;
@@ -72,6 +73,8 @@ public class Feed extends AppCompatActivity {
         userdp = findViewById(R.id.userdp_Iv);
         logo = findViewById(R.id.logo);
         addcmntTv = findViewById(R.id.tv_addComment);
+
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
@@ -113,12 +116,15 @@ public class Feed extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Feed.this, Feed.class);
-                intent.putExtra("username", username);
-                intent.putExtra("bio", bio);
-                intent.putExtra("isowner", isOwner);
-                intent.putExtra("dp", dp);
+
+                    intent.putExtra("username", username);
+                    intent.putExtra("bio", bio);
+                    intent.putExtra("isowner", isOwner);
+                    intent.putExtra("dp", dp);
+
                 startActivity(intent);
                 finish();
+
             }
 
         });
@@ -142,20 +148,28 @@ public class Feed extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.profile:
 
-                Intent i = new Intent(Feed.this, regularProfile.class);
+                Intent intent = new Intent(Feed.this, regularProfile.class);
 
-                i.putExtra("username", username);
-                i.putExtra("bio", bio);
-                i.putExtra("isowner", isOwner);
-                i.putExtra("dp", dp);
+                if(username == null){
+                    intent.putExtra("username", username_Sp);
+                    intent.putExtra("bio", bio_Sp);
+                    intent.putExtra("isowner", isOwner_Sp);
+                    intent.putExtra("dp", dp_Sp);
+                }else{
+                    intent.putExtra("username", username);
+                    intent.putExtra("bio", bio);
+                    intent.putExtra("isowner", isOwner);
+                    intent.putExtra("dp", dp);
+                }
 
-                startActivity(i);
-                finish();
+
+                startActivity(intent);
+
                 return true;
 
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(this,Login.class);
+                intent = new Intent(this,Login.class);
                 startActivity(intent);
                 finish();
             default:
@@ -168,12 +182,16 @@ public class Feed extends AppCompatActivity {
 
 
     public void myDpProcess(){
+        StorageReference imageRef;
 
-
-
-        if(dp != null ){
+        if(dp != null || dp_Sp != null){
             // With the storageReference, get the image based on its name
-            StorageReference imageRef = this.storageRef.child("images/" + dp);
+
+            if(dp_Sp !=null)
+                 imageRef = this.storageRef.child("images/" + dp_Sp);
+            else
+                 imageRef = this.storageRef.child("images/" + dp);
+
 
             // Download the image and display via Picasso accordingly
             imageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -194,5 +212,51 @@ public class Feed extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("dp", dp);
+        editor.putString("dp2", dp_Sp);
+        editor.putString("username", username);
+        editor.putString("bio", bio);
+        System.out.println(bio);
+        editor.putString("isowner", isOwner);
+
+        editor.apply();
+        editor.commit();
+
+
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        SharedPreferences sp = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+
+        username_Sp = sp.getString("username",null);
+        bio_Sp = sp.getString("bio",null);
+        isOwner_Sp = sp.getString("isowner",null);
+
+        dp_Sp = sp.getString("dp",null);
+
+        if(dp_Sp == null)
+            dp_Sp = sp.getString("dp2",null);
+
+        System.out.println(bio_Sp + "onstart");
+
+
+
+
+        myDpProcess();
+
+    }
+
+
+
 
 }

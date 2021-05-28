@@ -7,13 +7,6 @@
     android:orientation="vertical"
     tools:context=".Comments">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/comments_Rc"
-        android:layout_width="match_parent"
-        android:layout_height="702dp">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

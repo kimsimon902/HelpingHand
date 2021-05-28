@@ -35,10 +35,15 @@ public class Comments extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
+        Intent intent = getIntent();
+
+        postid = intent.getStringExtra("key");
+
         uid = user.getUid();
 
         addcomment = findViewById(R.id.addcomment_Et);
         postcmnt = findViewById(R.id.postcomment_Tv);
+
 
         postcmnt.setOnClickListener(new View.OnClickListener() {
 
@@ -58,13 +63,13 @@ public class Comments extends AppCompatActivity {
     }
 
     private void addComment(){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(postid).child("comments");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Posts").child(postid);
 
         HashMap<String, Object> hashmap = new HashMap<>();
         hashmap.put("comment", addcomment.getText().toString());
         hashmap.put("publisher", uid);
 
-        ref.push().setValue(hashmap);
+        ref.child("comments").push().setValue(hashmap);
         addcomment.setText("");
 
     }

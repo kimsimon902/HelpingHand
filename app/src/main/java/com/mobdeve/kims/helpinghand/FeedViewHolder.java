@@ -55,18 +55,6 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
         this.postdp = itemView.findViewById(R.id.iv_avatar);
         this.userdp = itemView.findViewById(R.id.userdp_Iv);
 
-        addcmntTv.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-
-
-            }
-
-        });
-
-
 
 
     }
@@ -96,6 +84,27 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
                 } else {
                     Log.d("Debug", "onComplete: did not get image");
                 }
+            }
+        });
+
+    }
+
+    public void getComments(String postid){
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Posts").child(postid).child("comments");
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getChildrenCount() > 0) {
+                    commentsTv.setText("View all " + snapshot.getChildrenCount() + " Comments");
+                    commentsTv.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
@@ -157,6 +166,10 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
 
         }
 
+    }
+
+    public void setCommentListener(View.OnClickListener ocl) {
+        this.addcmntTv.setOnClickListener(ocl);
     }
 
 

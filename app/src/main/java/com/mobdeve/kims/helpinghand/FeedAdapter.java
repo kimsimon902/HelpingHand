@@ -1,5 +1,6 @@
 package com.mobdeve.kims.helpinghand;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,12 +40,22 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
         holder.setCaption(this.data.get(position).getCaption());
         holder.setImage("images/" + this.data.get(position).getImage_name());
         holder.setdps(this.data.get(position).getUid());
+        holder.getComments(this.data.get(position).getKey());
 
-
+        holder.setCommentListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), Comments.class);
+                intent.putExtra("key", data.get(position).getKey());
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return this.data.size();
     }
+
+
 }
