@@ -2,9 +2,12 @@ package com.mobdeve.kims.helpinghand;
 
 import android.net.Uri;
 
+import java.util.ArrayList;
+
 public class Post {
 
     public String name, caption, image_name, username, uid, key;
+
 
 
     public Post(){
@@ -19,6 +22,7 @@ public class Post {
         this.image_name = imageName;
         this.uid = uid;
         this.key = key;
+
     }
 
     public String getUsername(){
@@ -41,5 +45,7 @@ public class Post {
     public String getKey(){
         return key;
     }
+
+
 
 }
