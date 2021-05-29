@@ -46,8 +46,9 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         auth = FirebaseAuth.getInstance();
-
-        if (auth.getCurrentUser() != null) {
+        Intent i = getIntent();
+        String checker = i.getStringExtra("signUp");
+        if (auth.getCurrentUser() != null && !i.hasExtra("signUp")) {
 
             Intent intent = new Intent(Login.this, Feed.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -123,6 +124,7 @@ public class Login extends AppCompatActivity {
 
                     progressBar.setVisibility(View.GONE);
                     String uid = mAuth.getUid();
+                    Log.d("login", "uid: " + uid);
 
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
                     ref.addValueEventListener(new ValueEventListener() {
@@ -133,11 +135,14 @@ public class Login extends AppCompatActivity {
                             String isOwner = snapshot.child("isOwner").getValue().toString();
                             dp = snapshot.child("image_name").getValue().toString();
 
+                            Log.d("dsada", "isOwner: " + isOwner);
+
                             Intent intent = new Intent(Login.this, Feed.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("username", username);
                             intent.putExtra("bio", bio);
                             intent.putExtra("isowner", isOwner);
+                            Log.d("isowner", "isOwner: " + isOwner);
                             intent.putExtra("dp", dp);
                             intent.putExtra("uid", uid);
                             startActivity(intent);

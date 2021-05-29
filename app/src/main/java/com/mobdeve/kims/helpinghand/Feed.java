@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,9 +38,11 @@ import java.util.ArrayList;
 
 public class Feed extends AppCompatActivity {
 
+    private User userProfile;
     private TextView usernameTv, addcmntTv;
-    private String username, bio, isOwner,uid,dp, dp_Sp, username_Sp, bio_Sp, isOwner_Sp;
+    private String username, bio, isOwner,uid,dp, uid_Sp, dp_Sp, username_Sp, bio_Sp, isOwner_Sp;
     private ImageView userdp,logo;
+    private Button feedAddBtn;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference myRef;
@@ -50,6 +54,9 @@ public class Feed extends AppCompatActivity {
     private FeedAdapter myAdapter;
 
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+
+    //for option profile
+    private String iName, iEmail, iDesc, iImgName;
 
 
     @Override
@@ -64,23 +71,25 @@ public class Feed extends AppCompatActivity {
 
         username = i.getStringExtra("username");
         bio = i.getStringExtra("bio");
-        isOwner = i.getStringExtra("owner");
+        isOwner = i.getStringExtra("isowner");
         dp = i.getStringExtra("dp");
         uid = i.getStringExtra("uid");
+
+        System.out.println(uid);
+        System.out.println(isOwner);
 
         //usernameTv = findViewById(R.id.usernameTv);
         postsRv = findViewById(R.id.rv_posts);
         userdp = findViewById(R.id.userdp_Iv);
         logo = findViewById(R.id.logo);
         addcmntTv = findViewById(R.id.tv_addComment);
-
-
+        feedAddBtn = findViewById(R.id.feedAddBtn);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         this.postsRv.setLayoutManager(linearLayoutManager);
-        myAdapter = new FeedAdapter(posts, uid);
+        myAdapter = new FeedAdapter(posts, uid, isOwner);
         this.postsRv.setAdapter(this.myAdapter);
         myDpProcess();
         myAdapter.notifyDataSetChanged();
@@ -121,6 +130,7 @@ public class Feed extends AppCompatActivity {
                     intent.putExtra("bio", bio);
                     intent.putExtra("isowner", isOwner);
                     intent.putExtra("dp", dp);
+                    intent.putExtra("uid", uid);
 
                 startActivity(intent);
                 finish();
@@ -129,6 +139,18 @@ public class Feed extends AppCompatActivity {
 
         });
 
+        feedAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Feed.this, AddPost.class);
+
+                i.putExtra("username", username);
+                i.putExtra("uid", user.getUid());
+
+                startActivity(i);
+                finish();
+            }
+        });
 
 
     }
@@ -148,29 +170,91 @@ public class Feed extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.profile:
 
-                Intent intent = new Intent(Feed.this, regularProfile.class);
+//                Intent intent = new Intent(Feed.this, regularProfile.class);
 
-                if(username == null){
-                    intent.putExtra("username", username_Sp);
-                    intent.putExtra("bio", bio_Sp);
-                    intent.putExtra("isowner", isOwner_Sp);
-                    intent.putExtra("dp", dp_Sp);
-                }else{
-                    intent.putExtra("username", username);
-                    intent.putExtra("bio", bio);
-                    intent.putExtra("isowner", isOwner);
-                    intent.putExtra("dp", dp);
+//                if(username == null){
+//                    intent.putExtra("username", username_Sp);
+//                    intent.putExtra("bio", bio_Sp);
+//                    intent.putExtra("isowner", isOwner_Sp);
+//                    intent.putExtra("dp", dp_Sp);
+//                }else{
+//                    intent.putExtra("username", username);
+//                    intent.putExtra("bio", bio);
+//                    intent.putExtra("isowner", isOwner);
+//                    intent.putExtra("dp", dp);
+//                }
+
+
+
+                Intent i;
+                Log.d("before if", "isOwner: " + isOwner);
+                Log.d("sp", "isOwner-SP: " + isOwner_Sp);
+                Log.d("ddd", "uid: " +  uid);
+
+                if(isOwner == null){
+                    if(isOwner_Sp.equals("true")){
+                        i = new Intent(Feed.this, businessProfile.class);
+                        i.putExtra("businessuid", uid_Sp);
+                        i.putExtra("isOwner", isOwner_Sp);
+                    }else {
+                        i = new Intent(Feed.this, regularProfile.class);
+                        i.putExtra("uid", uid_Sp);
+                        i.putExtra("isOwner", isOwner_Sp);
+                    }
+                }else {
+                    if(isOwner.equals("true")) {
+                        i = new Intent(Feed.this, businessProfile.class);
+                        i.putExtra("businessuid", uid);
+                        i.putExtra("isOwner", isOwner);
+
+                    }else
+                    {
+                        i = new Intent(Feed.this, regularProfile.class);
+                        i.putExtra("uid", uid);
+                    }
                 }
 
 
-                startActivity(intent);
+
+//                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+//                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                        User userProfile = snapshot.getValue(User.class);
+//                        iName = userProfile.getusername();
+//                        iEmail = userProfile.getEmail();
+//                        iDesc = userProfile.getDescription();
+//                        iImgName = userProfile.getImage_name();
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+
+//                i.putExtra("username", iName);
+//                i.putExtra("bio", iDesc);
+//                i.putExtra("isowner", isOwner);
+//                i.putExtra("imgname", iImgName);
+//                i.putExtra("email", iEmail);
+//                i.putExtra("dp", dp);
+//                i.putExtra("businessuid", uid);
+//                i.putExtra("uid", uid);
+
+                startActivity(i);
+
 
                 return true;
 
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
-                intent = new Intent(this,Login.class);
+                Intent intent = new Intent(this,Login.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                SharedPreferences settings = this.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                settings.edit().clear().commit();
                 startActivity(intent);
                 finish();
             default:
@@ -225,7 +309,7 @@ public class Feed extends AppCompatActivity {
         editor.putString("dp2", dp_Sp);
         editor.putString("username", username);
         editor.putString("bio", bio);
-        System.out.println(bio);
+        editor.putString("uid", uid);
         editor.putString("isowner", isOwner);
 
         editor.apply();
@@ -239,25 +323,56 @@ public class Feed extends AppCompatActivity {
 
         SharedPreferences sp = getSharedPreferences("MySharedPref", MODE_PRIVATE);
 
+        Intent intent = getIntent();
+        isOwner = intent.getStringExtra("isowner");
+
+
         username_Sp = sp.getString("username",null);
         bio_Sp = sp.getString("bio",null);
         isOwner_Sp = sp.getString("isowner",null);
-
-        dp_Sp = sp.getString("dp",null);
-
-        if(dp_Sp == null)
-            dp_Sp = sp.getString("dp2",null);
+        isOwner = isOwner_Sp;
+//
+//        dp_Sp = sp.getString("dp",null);
+//        uid_Sp = sp.getString("uid", null);
+////        uid = uid_Sp;
+//        if(dp_Sp == null)
+//            dp_Sp = sp.getString("dp2",null);
 
         System.out.println(bio_Sp + "onstart");
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String tempUid = user.getUid();
+        Log.d("tempuid", "tempuid: " + tempUid);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(tempUid);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                userProfile = snapshot.getValue(User.class);
+                isOwner = userProfile.getIsOwner().toString();
+                dp = userProfile.getImage_name();
+
+                if(isOwner.equals("true")){
+                    feedAddBtn.setVisibility(View.VISIBLE);
+                }
+
+                myDpProcess();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
+        Log.d("isowner", "isOwner: " + isOwner);
+
+        myAdapter = new FeedAdapter(posts, uid, isOwner);
+        this.postsRv.setAdapter(this.myAdapter);
 
         myDpProcess();
-
     }
-
-
-
 
 }

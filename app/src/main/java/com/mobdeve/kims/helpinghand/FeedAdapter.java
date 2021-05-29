@@ -1,6 +1,7 @@
 package com.mobdeve.kims.helpinghand;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +16,14 @@ import java.util.ArrayList;
 public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
 
     private ArrayList<Post> data;
-    private String uid;
+    private String uid, isOwner;
 
-    public FeedAdapter(ArrayList<Post> data, String uid) {
+    public FeedAdapter(ArrayList<Post> data, String uid, String isOwner) {
         this.data = data;
         this.uid = uid;
+        this.isOwner = isOwner;
+
+        Log.d("isowner from feedadap", "isowner: " + this.isOwner);
     }
 
     @NonNull
@@ -50,6 +54,24 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
                 view.getContext().startActivity(intent);
             }
         });
+
+        holder.listen(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), businessProfile.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("businessusernmae", data.get(position).getUsername());
+                bundle.putString("businessuid", data.get(position).getUid());
+                bundle.putString("username", data.get(position).getUsername());
+                bundle.putString("isowner", isOwner);
+                i.putExtras(bundle);
+
+
+                v.getContext().startActivity(i);
+
+            }
+        });
+
     }
 
     @Override

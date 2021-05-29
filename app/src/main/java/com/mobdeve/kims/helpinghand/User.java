@@ -20,6 +20,7 @@ public class User {
         this.image_name = imageName;
     }
 
+    public String getEmail(){return email;}
 
     public String getImage_name()
     {
@@ -30,5 +31,12 @@ public class User {
         return username;
     }
 
+    public String getDescription(){
+        return description;
+    }
+
+    public Boolean getIsOwner(){
+        return isOwner;
+    }
 
 }

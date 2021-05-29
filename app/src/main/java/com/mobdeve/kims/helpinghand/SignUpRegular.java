@@ -323,6 +323,7 @@ public class SignUpRegular extends AppCompatActivity {
                                         progressBar.setVisibility(View.GONE);
                                         Toast.makeText(SignUpRegular.this, "User has been registered!", Toast.LENGTH_LONG).show();
                                         Intent i = new Intent(SignUpRegular.this, Login.class);
+                                        i.putExtra("signUp", "true");
                                         startActivity(i);
 
                                         //redirect to login next

@@ -49,10 +49,22 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/feedAddBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="New Post"
+        android:visibility="gone"
+        app:backgroundTint="#84A9AC" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_posts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10sp"
-        android:layout_marginRight="10sp" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp" />
 </LinearLayout>

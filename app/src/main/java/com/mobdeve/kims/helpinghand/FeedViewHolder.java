@@ -59,6 +59,10 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
 
     }
 
+    public void listen(View.OnClickListener onClickListener){
+        this.postdp.setOnClickListener(onClickListener);
+    }
+
     public void setUsername(String username) {
         this.usernameTv.setText(username);
     }

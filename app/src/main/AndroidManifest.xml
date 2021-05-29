@@ -25,6 +25,7 @@
         <activity android:name=".SignUpRegular" />
         <activity android:name=".SignUpChoice" />
         <activity android:name=".regularProfile" />
+        <activity android:name=".businessProfile"/>
         <activity android:name=".Feed" />
         <activity android:name=".Login">
             <intent-filter>
