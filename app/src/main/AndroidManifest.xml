@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HelpingHand">
-        <activity android:name=".Comments"></activity>
+        <activity android:name=".businessProfile"></activity>
+        <activity android:name=".Comments" />
         <activity android:name=".AddPost" />
         <activity android:name=".SignUpBusiness" />
         <activity android:name=".SignUpRegular" />

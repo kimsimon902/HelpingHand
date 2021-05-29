@@ -25,6 +25,8 @@ public class Post {
 
     }
 
+    public String getName(){return name;}
+
     public String getUsername(){
         return username;
     }

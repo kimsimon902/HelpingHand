@@ -15,9 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -64,7 +62,7 @@ public class Feed extends AppCompatActivity {
 
         username = i.getStringExtra("username");
         bio = i.getStringExtra("bio");
-        isOwner = i.getStringExtra("owner");
+        isOwner = i.getStringExtra("isowner");
         dp = i.getStringExtra("dp");
         uid = i.getStringExtra("uid");
 
@@ -117,11 +115,11 @@ public class Feed extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Feed.this, Feed.class);
 
-                    intent.putExtra("username", username);
-                    intent.putExtra("bio", bio);
-                    intent.putExtra("isowner", isOwner);
-                    intent.putExtra("dp", dp);
-
+                intent.putExtra("username", username);
+                intent.putExtra("bio", bio);
+                intent.putExtra("isowner", isOwner);
+                intent.putExtra("dp", dp);
+                intent.putExtra("uid", uid);
                 startActivity(intent);
                 finish();
 
@@ -148,6 +146,7 @@ public class Feed extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.profile:
 
+
                 Intent intent = new Intent(Feed.this, regularProfile.class);
 
                 if(username == null){
@@ -161,6 +160,24 @@ public class Feed extends AppCompatActivity {
                     intent.putExtra("isowner", isOwner);
                     intent.putExtra("dp", dp);
                 }
+
+
+
+//                Intent i;
+//
+//                if(isOwner.equals("true")) {
+//                    i = new Intent(Feed.this, businessProfile.class);
+//                }else
+//                {
+//                    i = new Intent(Feed.this, regularProfile.class);
+//                }
+//
+//                i.putExtra("username", username);
+//                i.putExtra("bio", bio);
+//                i.putExtra("isowner", isOwner);
+//                i.putExtra("dp", dp);
+//                i.putExtra("businessuid", uid);
+//                i.putExtra("uid", uid);
 
 
                 startActivity(intent);
