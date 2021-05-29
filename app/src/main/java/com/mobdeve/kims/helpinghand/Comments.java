@@ -40,7 +40,7 @@ public class Comments extends AppCompatActivity {
     private ArrayList<Comment> comments = new ArrayList<>();
 
     private RecyclerView commentsRc;
-    //private CommentAdapter myAdapter;
+    private CommentAdapter myAdapter;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference ref;
@@ -69,6 +69,8 @@ public class Comments extends AppCompatActivity {
                     Toast.makeText(Comments.this, "You cant send an empty comment", Toast.LENGTH_SHORT).show();
                 } else{
                     addComment();
+
+
                 }
 
             }
@@ -76,36 +78,37 @@ public class Comments extends AppCompatActivity {
         });
 
 
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-//        linearLayoutManager.setReverseLayout(true);
-//        linearLayoutManager.setStackFromEnd(true);
-//        this.commentsRc.setLayoutManager(linearLayoutManager);
-//        myAdapter = new CommentAdapter(comments, uid);
-//        this.commentsRc.setAdapter(this.myAdapter);
-//
-//        firebaseDatabase = FirebaseDatabase.getInstance();
-//        ref = this.firebaseDatabase.getReference("Posts").child(postid).child("comments");
-//
-//
-//        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                ArrayList<String> keys = new ArrayList<>();
-//                for(DataSnapshot keyNode : dataSnapshot.getChildren()) {
-//                    keys.add(keyNode.getKey());
-//                     comment = keyNode.getValue(Comment.class);
-//                    comments.add(comment);
-//
-//                    // Once done loading data, notify the adapter that data has loaded in
-//                    myAdapter.notifyDataSetChanged();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        this.commentsRc.setLayoutManager(linearLayoutManager);
+        myAdapter = new CommentAdapter(comments, uid);
+        this.commentsRc.setAdapter(this.myAdapter);
+
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Posts").child(postid).child("comments");
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                System.out.println(snapshot.getChildrenCount());
+
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    Comment comment = postSnapshot.getValue(Comment.class);
+
+                        comments.add(comment);
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
     }

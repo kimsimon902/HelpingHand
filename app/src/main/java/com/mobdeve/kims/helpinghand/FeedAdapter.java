@@ -55,6 +55,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
             }
         });
 
+        holder.viewCommentListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), Comments.class);
+                intent.putExtra("key", data.get(position).getKey());
+                view.getContext().startActivity(intent);
+            }
+        });
+
         holder.listen(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

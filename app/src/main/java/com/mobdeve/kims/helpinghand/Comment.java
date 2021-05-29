@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Comment implements Serializable {
 
-    public String author, comment,commentid,postid;
+    public String publisher, comment,comment_id,post_id;
 
 
 
@@ -17,15 +17,15 @@ public class Comment implements Serializable {
 
     public Comment(String author, String comment, String commentid, String postid){
 
-        this.author = author;
+        this.publisher = author;
         this.comment = comment;
-        this.commentid = commentid;
-        this.postid = postid;
+        this.comment_id = commentid;
+        this.post_id = postid;
 
     }
 
-    public void setAuthor(String author){
-        this.author= author;
+    public void setPublisher(String author){
+        this.publisher= author;
 
     }
 
@@ -33,8 +33,8 @@ public class Comment implements Serializable {
         this.comment= comment;
     }
 
-    public String getAuthor(){
-        return author;
+    public String getPublisher(){
+        return publisher;
     }
 
     public String getComment(){
@@ -42,11 +42,11 @@ public class Comment implements Serializable {
     }
 
     public String getCommentid(){
-        return commentid;
+        return comment_id;
     }
 
     public String getpostid(){
-        return postid;
+        return post_id;
     }
 
 }

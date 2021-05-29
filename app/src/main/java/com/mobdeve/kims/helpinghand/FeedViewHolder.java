@@ -176,5 +176,9 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
         this.addcmntTv.setOnClickListener(ocl);
     }
 
+    public void viewCommentListener(View.OnClickListener ocl) {
+        this.commentsTv.setOnClickListener(ocl);
+    }
+
 
 }

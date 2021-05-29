@@ -148,7 +148,7 @@ public class Feed extends AppCompatActivity {
                 i.putExtra("uid", user.getUid());
 
                 startActivity(i);
-                finish();
+
             }
         });
 
@@ -327,9 +327,9 @@ public class Feed extends AppCompatActivity {
         isOwner = intent.getStringExtra("isowner");
 
 
-        username_Sp = sp.getString("username",null);
-        bio_Sp = sp.getString("bio",null);
-        isOwner_Sp = sp.getString("isowner",null);
+        username_Sp = sp.getString("username", null);
+        bio_Sp = sp.getString("bio", null);
+        isOwner_Sp = sp.getString("isowner", null);
         isOwner = isOwner_Sp;
 //
 //        dp_Sp = sp.getString("dp",null);
@@ -352,7 +352,7 @@ public class Feed extends AppCompatActivity {
                 isOwner = userProfile.getIsOwner().toString();
                 dp = userProfile.getImage_name();
 
-                if(isOwner.equals("true")){
+                if (isOwner.equals("true")) {
                     feedAddBtn.setVisibility(View.VISIBLE);
                 }
 
@@ -367,12 +367,31 @@ public class Feed extends AppCompatActivity {
         });
 
 
-        Log.d("isowner", "isOwner: " + isOwner);
-
-        myAdapter = new FeedAdapter(posts, uid, isOwner);
-        this.postsRv.setAdapter(this.myAdapter);
-
         myDpProcess();
+
+//        if (posts.size() == 0) {
+//            this.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    ArrayList<String> keys = new ArrayList<>();
+//                    for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
+//                        keys.add(keyNode.getKey());
+//                        Post post = keyNode.getValue(Post.class);
+//                        posts.add(post);
+//
+//                        // Once done loading data, notify the adapter that data has loaded in
+//                        myAdapter.notifyDataSetChanged();
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//                    Log.d("Debug", "onDataChange: canceled");
+//                }
+//            });
+//        }
+        myAdapter.notifyDataSetChanged();
     }
+
 
 }
