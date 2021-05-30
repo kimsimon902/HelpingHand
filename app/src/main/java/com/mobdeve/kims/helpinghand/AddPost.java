@@ -62,7 +62,7 @@ public class AddPost extends AppCompatActivity {
     private DatabaseReference myRef;
 
 
-    //FOR image name and uri
+    //FOR image name and uris
     private String image_name;
     private Uri localUri;
 
@@ -118,6 +118,8 @@ public class AddPost extends AppCompatActivity {
 
     }               //end of oncreate
 
+
+    //ask camera permission to use for app
     private void askCameraPermission(){
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
@@ -127,6 +129,7 @@ public class AddPost extends AppCompatActivity {
 
     }
 
+    //opens camera
     private void openCamera(){
         Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(camera, CAMERA_REQUEST_CODE);
@@ -150,7 +153,6 @@ public class AddPost extends AppCompatActivity {
                 image_name = f.getName();
                 localUri = contentUri;
                 postIv.setVisibility(View.VISIBLE);
-//                uploadImageToFirebase(f.getName(), contentUri);
             }
         }
 
@@ -164,12 +166,11 @@ public class AddPost extends AppCompatActivity {
                 image_name = imageFileName;
                 localUri = contentUri;
                 postIv.setVisibility(View.VISIBLE);
-//                uploadImageToFirebase(imageFileName, contentUri);
             }
         }
     }
 
-
+    //upload an image to firebase
     private void uploadImageToFirebase(String name, Uri contentUri){
         StorageReference image = storageReference.child("images/" + name);
 
@@ -179,8 +180,7 @@ public class AddPost extends AppCompatActivity {
                 image.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Log.d("tag", "onSuccess: Uploaded Image URL is: " + uri.toString());
-//                        Picasso.get().load(uri).into(signupBusSelectedImageIv);
+
                     }
                 });
             }
@@ -192,6 +192,7 @@ public class AddPost extends AppCompatActivity {
         });
     }
 
+    //gets file extension
     private String getFileExt(Uri contentUri){
         ContentResolver c = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
@@ -199,7 +200,7 @@ public class AddPost extends AppCompatActivity {
     }
 
 
-
+    //create a filename for image
     private File createImageFile() throws IOException {
         //Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -216,10 +217,10 @@ public class AddPost extends AppCompatActivity {
         return image;
     }
 
+    //creates a file for image taken using camera
     private void dispatchTakePictureIntent(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
-//        if(takePictureIntent.resolveActivity(getPackageManager()) != null){
         File photoFile = null;
         try{
             photoFile = createImageFile();
@@ -235,9 +236,9 @@ public class AddPost extends AppCompatActivity {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
         }
-//        }
     }
 
+    //create a post and upload to database
     private void createPost(){
         uploadImageToFirebase(image_name, localUri);
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+//choose between regular or business user
 public class SignUpChoice extends AppCompatActivity {
 
     private Button choiceRegBtn;

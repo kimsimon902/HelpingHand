@@ -55,10 +55,6 @@ public class Feed extends AppCompatActivity {
 
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
-    //for option profile
-    private String iName, iEmail, iDesc, iImgName;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,8 +71,6 @@ public class Feed extends AppCompatActivity {
         dp = i.getStringExtra("dp");
 
 
-
-        //usernameTv = findViewById(R.id.usernameTv);
         postsRv = findViewById(R.id.rv_posts);
         userdp = findViewById(R.id.userdp_Iv);
         logo = findViewById(R.id.logo);
@@ -92,12 +86,13 @@ public class Feed extends AppCompatActivity {
         myDpProcess();
         myAdapter.notifyDataSetChanged();
 
-       // usernameTv.setText(i.getStringExtra("username"));
+
 
         this.firebaseDatabase = FirebaseDatabase.getInstance();
         this.myRef = this.firebaseDatabase.getReference("Posts");
         storageReference = FirebaseStorage.getInstance().getReference();
 
+        //get post from database and populate local arraylist
         this.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -169,22 +164,6 @@ public class Feed extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.profile:
 
-//                Intent intent = new Intent(Feed.this, regularProfile.class);
-
-//                if(username == null){
-//                    intent.putExtra("username", username_Sp);
-//                    intent.putExtra("bio", bio_Sp);
-//                    intent.putExtra("isowner", isOwner_Sp);
-//                    intent.putExtra("dp", dp_Sp);
-//                }else{
-//                    intent.putExtra("username", username);
-//                    intent.putExtra("bio", bio);
-//                    intent.putExtra("isowner", isOwner);
-//                    intent.putExtra("dp", dp);
-//                }
-
-
-
                 Intent i;
                 Log.d("before if", "isOwner: " + isOwner);
                 Log.d("sp", "isOwner-SP: " + isOwner_Sp);
@@ -213,36 +192,6 @@ public class Feed extends AppCompatActivity {
                     }
                 }
 
-
-
-//                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-//                ref.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                        User userProfile = snapshot.getValue(User.class);
-//                        iName = userProfile.getusername();
-//                        iEmail = userProfile.getEmail();
-//                        iDesc = userProfile.getDescription();
-//                        iImgName = userProfile.getImage_name();
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-
-//                i.putExtra("username", iName);
-//                i.putExtra("bio", iDesc);
-//                i.putExtra("isowner", isOwner);
-//                i.putExtra("imgname", iImgName);
-//                i.putExtra("email", iEmail);
-//                i.putExtra("dp", dp);
-//                i.putExtra("businessuid", uid);
-//                i.putExtra("uid", uid);
-
                 startActivity(i);
 
 
@@ -266,7 +215,7 @@ public class Feed extends AppCompatActivity {
     }
 
 
-
+    //set dp image
     public void myDpProcess(){
         StorageReference imageRef;
 
@@ -284,14 +233,12 @@ public class Feed extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if(task.isSuccessful()) {
-                        Log.d("Debug", "onComplete: got image");
                         Picasso.get()
                                 .load(task.getResult())
                                 .error(R.mipmap.ic_launcher)
                                 .placeholder(R.mipmap.ic_launcher)
                                 .into(userdp);
                     } else {
-                        Log.d("Debug", "onComplete: did not get image");
                     }
                 }
             });
@@ -332,18 +279,9 @@ public class Feed extends AppCompatActivity {
         bio_Sp = sp.getString("bio", null);
         isOwner_Sp = sp.getString("isowner", null);
         isOwner = isOwner_Sp;
-//
-//        dp_Sp = sp.getString("dp",null);
-//        uid_Sp = sp.getString("uid", null);
-////        uid = uid_Sp;
-//        if(dp_Sp == null)
-//            dp_Sp = sp.getString("dp2",null);
-
-        System.out.println(bio_Sp + "onstart");
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String tempUid = user.getUid();
-        Log.d("tempuid", "tempuid: " + tempUid);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(tempUid);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -370,27 +308,6 @@ public class Feed extends AppCompatActivity {
 
         myDpProcess();
 
-//        if (posts.size() == 0) {
-//            this.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    ArrayList<String> keys = new ArrayList<>();
-//                    for (DataSnapshot keyNode : dataSnapshot.getChildren()) {
-//                        keys.add(keyNode.getKey());
-//                        Post post = keyNode.getValue(Post.class);
-//                        posts.add(post);
-//
-//                        // Once done loading data, notify the adapter that data has loaded in
-//                        myAdapter.notifyDataSetChanged();
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    Log.d("Debug", "onDataChange: canceled");
-//                }
-//            });
-//        }
         myAdapter.notifyDataSetChanged();
     }
 

@@ -2,6 +2,7 @@ package com.mobdeve.kims.helpinghand;
 
 import android.net.Uri;
 
+//user model
 public class User {
 
     public String username, email, description, image_name;

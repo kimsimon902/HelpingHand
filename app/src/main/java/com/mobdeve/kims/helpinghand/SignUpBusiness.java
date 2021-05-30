@@ -114,6 +114,7 @@ public class SignUpBusiness extends AppCompatActivity {
 
     }
 
+    //ask phone permission for app to use camera
     private void askCameraPermission(){
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
@@ -134,6 +135,7 @@ public class SignUpBusiness extends AppCompatActivity {
         }
     }
 
+    //opens camera
     private void openCamera(){
         Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(camera, CAMERA_REQUEST_CODE);
@@ -156,7 +158,6 @@ public class SignUpBusiness extends AppCompatActivity {
                 image_name = f.getName();
                 localUri = contentUri;
                 signupBusSelectedImageIv.setVisibility(View.VISIBLE);
-//                uploadImageToFirebase(f.getName(), contentUri);
             }
         }
 
@@ -169,7 +170,6 @@ public class SignUpBusiness extends AppCompatActivity {
 
                 image_name = imageFileName;
                 localUri = contentUri;
-//                uploadImageToFirebase(imageFileName, contentUri);
                 signupBusSelectedImageIv.setVisibility(View.VISIBLE);
             }
 
@@ -177,7 +177,7 @@ public class SignUpBusiness extends AppCompatActivity {
     }
 
 
-
+    //upload image to firebase
     private void uploadImageToFirebase(String name, Uri contentUri){
         StorageReference image = storageReference.child("images/" + name);
 
@@ -189,8 +189,6 @@ public class SignUpBusiness extends AppCompatActivity {
                 image.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Log.d("tag", "onSuccess: Uploaded Image URL is: " + uri.toString());
-//                        Picasso.get().load(uri).into(signupBusSelectedImageIv);
                     }
                 });
             }
@@ -202,17 +200,18 @@ public class SignUpBusiness extends AppCompatActivity {
         });
     }
 
+    //get file extension
     private String getFileExt(Uri contentUri){
         ContentResolver c = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(c.getType(contentUri));
     }
 
+    //create file name for image
     private File createImageFile() throws IOException{
         //Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-//        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName, /* prefix */
@@ -225,10 +224,10 @@ public class SignUpBusiness extends AppCompatActivity {
         return image;
     }
 
+    //create file for photo taken using camera
     private void dispatchTakePictureIntent(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
-//        if(takePictureIntent.resolveActivity(getPackageManager()) != null){
             File photoFile = null;
             try{
                 photoFile = createImageFile();
@@ -244,9 +243,9 @@ public class SignUpBusiness extends AppCompatActivity {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
             }
-//        }
     }
 
+    //register user then add to database
     private void registerUser(){
         String name = signupBusNameEt.getText().toString();
         String email = signupBusEmailEt.getText().toString().trim();

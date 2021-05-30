@@ -69,8 +69,6 @@ public class regularProfile extends AppCompatActivity {
         usernameTv.setText(username);
         emailTv.setText("email: " + user.getEmail());
         bioTv.setText(bio);
-//        myDpProcess();
-
 
         logo.setOnClickListener(new View.OnClickListener() {
 
@@ -81,7 +79,6 @@ public class regularProfile extends AppCompatActivity {
                 intent.putExtra("bio", bio);
                 intent.putExtra("isowner", isOwner);
                 intent.putExtra("dp", dp);
-//                intent.putExtra("dp", uid);
                 startActivity(intent);
                 finish();
             }
@@ -113,7 +110,7 @@ public class regularProfile extends AppCompatActivity {
     }
 
 
-
+    //set dp image
     public void myDpProcess(){
 
         if(dp != null ){
@@ -125,7 +122,6 @@ public class regularProfile extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if(task.isSuccessful()) {
-                        Log.d("Debug", "onComplete: got image");
                         Picasso.get()
                                 .load(task.getResult())
                                 .error(R.mipmap.ic_launcher)
@@ -137,7 +133,6 @@ public class regularProfile extends AppCompatActivity {
                                 .placeholder(R.mipmap.ic_launcher)
                                 .into(dp2);
                     } else {
-                        Log.d("Debug", "onComplete: did not get image");
                     }
                 }
             });
@@ -184,6 +179,7 @@ public class regularProfile extends AppCompatActivity {
 
     }
 
+    //set user image
     public void setUserImg(String imageName) {
         // With the storageReference, get the image based on its name
         StorageReference imageRef = this.storageRef.child("images/" + imageName);
@@ -192,7 +188,6 @@ public class regularProfile extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if(task.isSuccessful()) {
-                    Log.d("Debug", "onComplete: got image");
                     Picasso.get()
                             .load(task.getResult())
                             .error(R.mipmap.ic_launcher)
@@ -204,7 +199,6 @@ public class regularProfile extends AppCompatActivity {
                             .placeholder(R.mipmap.ic_launcher)
                             .into(dp2);
                 } else {
-                    Log.d("Debug", "onComplete: did not get image");
                 }
             }
         });

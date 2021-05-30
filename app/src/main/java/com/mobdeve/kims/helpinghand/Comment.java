@@ -5,6 +5,7 @@ import android.net.Uri;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+//Comment class
 public class Comment implements Serializable {
 
     public String publisher, comment,comment_id,post_id;

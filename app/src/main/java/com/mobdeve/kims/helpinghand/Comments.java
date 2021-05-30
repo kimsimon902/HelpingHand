@@ -116,6 +116,7 @@ public class Comments extends AppCompatActivity {
 
     }
 
+    //add a comment to database
     private void addComment(){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Posts").child(postid);
 

@@ -79,14 +79,12 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if(task.isSuccessful()) {
-                    Log.d("Debug", "onComplete: got image");
                     Picasso.get()
                             .load(task.getResult())
                             .error(R.mipmap.ic_launcher)
                             .placeholder(R.mipmap.ic_launcher)
                             .into(imageIv);
                 } else {
-                    Log.d("Debug", "onComplete: did not get image");
                 }
             }
         });
@@ -156,14 +154,12 @@ public class FeedViewHolder extends RecyclerView.ViewHolder {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if(task.isSuccessful()) {
-                        Log.d("Debug", "onComplete: got image");
                         Picasso.get()
                                 .load(task.getResult())
                                 .error(R.mipmap.ic_launcher)
                                 .placeholder(R.mipmap.ic_launcher)
                                 .into(postdp);
                     } else {
-                        Log.d("Debug", "onComplete: did not get image");
                     }
                 }
             });

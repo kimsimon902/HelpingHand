@@ -28,7 +28,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
         this.uid = uid;
         this.isOwner = isOwner;
 
-        Log.d("isowner from feedadap", "isowner: " + this.isOwner);
     }
 
     @NonNull
@@ -84,7 +83,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
 
                         i.putExtra("businessusernmae", data.get(position).getUsername());
                         i.putExtra("businessuid", data.get(position).getUid());
-                        Log.d("businessuid", data.get(position).getUid());
                         i.putExtra("username", data.get(position).getUsername());
                         i.putExtra("isowner", isOwner);
 

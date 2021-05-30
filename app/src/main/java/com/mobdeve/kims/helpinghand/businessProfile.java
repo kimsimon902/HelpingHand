@@ -76,32 +76,9 @@ public class businessProfile extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
         businessusername = i.getStringExtra("businessusername");
-//        businessuid = bundle.getString("businessuid");
-
-
-
-
 
         setUserImg(uid);
         setBusImg(businessuid);
-
-//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(postid).child("comments");
-//
-//        ref.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if(snapshot.getChildrenCount() > 0) {
-//                    commentsTv.setText("View all " + snapshot.getChildrenCount() + " Comments");
-//                    commentsTv.setVisibility(View.VISIBLE);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
 
         username = i.getStringExtra("username");
         bio = i.getStringExtra("bio");
@@ -138,7 +115,7 @@ public class businessProfile extends AppCompatActivity {
         storageRef = FirebaseStorage.getInstance().getReference();
 
 
-
+            //get posts from database and populates local arraylist
             this.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -148,13 +125,10 @@ public class businessProfile extends AppCompatActivity {
                     for (DataSnapshot keyNode : snapshot.getChildren()) {
                         keys.add(keyNode.getKey());
                         Post post = keyNode.getValue(Post.class);
-                        System.out.println(post.getUid());
                         posts.add(post);
-                        System.out.println(posts.size());
 
                         if (post.getUid().equals(businessuid)) {
                             businessPosts.add(post);
-                            System.out.println("image file name is " + post.getImage_name());
                         }
 
 
@@ -186,6 +160,7 @@ public class businessProfile extends AppCompatActivity {
             }
         });
 
+        //get business info
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(businessuid);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -207,7 +182,7 @@ public class businessProfile extends AppCompatActivity {
             }
         });
 
-
+        //get user info
         DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
         ref2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -228,10 +203,11 @@ public class businessProfile extends AppCompatActivity {
 
     }
 
+    //set dp image
     public void myDpProcess(){
 
         if(dp != null ){
-            // With the storageReference, get the image based on its name
+            // With the storageReference, get the image based on its names
             StorageReference imageRef = this.storageRef.child("images/" + dp);
 
             // Download the image and display via Picasso accordingly
@@ -239,7 +215,6 @@ public class businessProfile extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if(task.isSuccessful()) {
-                        Log.d("Debug", "onComplete: got image");
                         Picasso.get()
                                 .load(task.getResult())
                                 .error(R.mipmap.ic_launcher)
@@ -251,7 +226,6 @@ public class businessProfile extends AppCompatActivity {
                                 .placeholder(R.mipmap.ic_launcher)
                                 .into(busHeaderdp_Iv);
                     } else {
-                        Log.d("Debug", "onComplete: did not get image");
                     }
                 }
             });
@@ -302,6 +276,7 @@ public class businessProfile extends AppCompatActivity {
         }
     }
 
+    //set user image
     public void setUserImg(String imageName) {
         // With the storageReference, get the image based on its name
         StorageReference imageRef = this.storageRef.child("images/" + imageName);
@@ -310,20 +285,19 @@ public class businessProfile extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if(task.isSuccessful()) {
-                    Log.d("Debug", "onComplete: got image");
                     Picasso.get()
                             .load(task.getResult())
                             .error(R.mipmap.ic_launcher)
                             .placeholder(R.mipmap.ic_launcher)
                             .into(busHeaderdp_Iv);
                 } else {
-                    Log.d("Debug", "onComplete: did not get image");
                 }
             }
         });
 
     }
 
+    //set business image
     public void setBusImg(String imageName) {
         // With the storageReference, get the image based on its name
         StorageReference imageRef = this.storageRef.child("images/" + imageName);
@@ -332,14 +306,12 @@ public class businessProfile extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if(task.isSuccessful()) {
-                    Log.d("Debug", "onComplete: got image");
                     Picasso.get()
                             .load(task.getResult())
                             .error(R.mipmap.ic_launcher)
                             .placeholder(R.mipmap.ic_launcher)
                             .into(dp1);
                 } else {
-                    Log.d("Debug", "onComplete: did not get image");
                 }
             }
         });

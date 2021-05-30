@@ -48,8 +48,6 @@ public class BusFeedViewHolder extends RecyclerView.ViewHolder {
         this.tv_addComment = itemView.findViewById(R.id.tv_addComment);
         tv_addComment.setVisibility(View.GONE);
         this.iv_image = itemView.findViewById(R.id.iv_image);
-//        this.iv_avatar = itemView.findViewById(R.id.iv_avatar);
-//        iv_avatar.setVisibility(View.GONE);
         this.userdp = itemView.findViewById(R.id.userdp_Iv);
 
 
@@ -71,14 +69,12 @@ public class BusFeedViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if(task.isSuccessful()){
-                    Log.d("Debug", "onComplete: got image");
                     Picasso.get()
                             .load(task.getResult())
                             .error(R.mipmap.ic_launcher)
                             .placeholder(R.mipmap.ic_launcher)
                             .into(iv_image);
                 } else {
-                    Log.d("Debug", "onComplete: Did not get image");
                 }
             }
         });
@@ -106,6 +102,7 @@ public class BusFeedViewHolder extends RecyclerView.ViewHolder {
 
     }
 
+    //set dp for user
     public void dpProcess(User user){
 
         imageName = user.getImage_name();
@@ -117,14 +114,12 @@ public class BusFeedViewHolder extends RecyclerView.ViewHolder {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if(task.isSuccessful()){
-                        Log.d("Debug", "onComplete: got image");
                         Picasso.get()
                                 .load(task.getResult())
                                 .error(R.mipmap.ic_launcher)
                                 .placeholder(R.mipmap.ic_launcher)
                                 .into(iv_avatar);
                     }else {
-                        Log.d("Debug", "onComplete: Did not get image");
                     }
                 }
             });

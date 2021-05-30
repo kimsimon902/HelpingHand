@@ -54,7 +54,6 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
 
     public void setComment(String postid, String commentid) {
 
-        System.out.println(postid + " this is comment id " + commentid);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Posts").child(postid).child("comments").child(commentid);
 
         ref.addValueEventListener(new ValueEventListener() {

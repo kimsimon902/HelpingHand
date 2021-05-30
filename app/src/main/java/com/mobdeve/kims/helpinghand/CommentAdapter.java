@@ -29,7 +29,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentViewHolder> {
                 .from(parent.getContext())
                 .inflate(R.layout.comments, parent, false);
 
-        // Create an instance of the ViewHolder with the created ViewGroup
+        // Create an instance of the ViewHolder with the created ViewGroups
         CommentViewHolder myViewHolder = new CommentViewHolder(v);
         return myViewHolder;
     }

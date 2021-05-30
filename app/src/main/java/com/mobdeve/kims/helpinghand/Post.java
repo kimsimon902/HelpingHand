@@ -5,6 +5,7 @@ import android.net.Uri;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+//post class
 public class Post implements Serializable {
 
     public String name, caption, image_name, username, uid, key;

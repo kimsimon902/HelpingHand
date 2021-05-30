@@ -38,7 +38,7 @@ public class BusFeedAdapter extends RecyclerView.Adapter<BusFeedViewHolder> {
         holder.setUsername(this.data.get(position).getName());
         holder.setCaption(this.data.get(position).getCaption());
         holder.setImage("images/" + this.data.get(position).getImage_name());
-//        holder.setdps(this.data.get(position).getUid());
+
 
 
 
