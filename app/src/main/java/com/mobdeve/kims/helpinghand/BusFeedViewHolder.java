@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +27,7 @@ public class BusFeedViewHolder extends RecyclerView.ViewHolder {
 
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
+    private CardView postCV;
     private TextView tv_username, tv_caption, tv_comments, tv_addComment;
     private ImageView iv_avatar, iv_image, userdp;
     private FirebaseDatabase firebaseDatabase;
@@ -37,6 +39,8 @@ public class BusFeedViewHolder extends RecyclerView.ViewHolder {
     public BusFeedViewHolder(@NonNull View itemView){
         super(itemView);
 
+        this.postCV = itemView.findViewById(R.id.postCV);
+        postCV.setVisibility(View.GONE);
         this.tv_username = itemView.findViewById(R.id.tv_username);
         this.tv_caption = itemView.findViewById(R.id.tv_caption);
         this.tv_comments = itemView.findViewById(R.id.tv_comments);
@@ -44,7 +48,8 @@ public class BusFeedViewHolder extends RecyclerView.ViewHolder {
         this.tv_addComment = itemView.findViewById(R.id.tv_addComment);
         tv_addComment.setVisibility(View.GONE);
         this.iv_image = itemView.findViewById(R.id.iv_image);
-        this.iv_avatar = itemView.findViewById(R.id.iv_avatar);
+//        this.iv_avatar = itemView.findViewById(R.id.iv_avatar);
+//        iv_avatar.setVisibility(View.GONE);
         this.userdp = itemView.findViewById(R.id.userdp_Iv);
 
 

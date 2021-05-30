@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:fontFamily="@font/roboto_medium"
             android:text="Add Product/Service"
             android:textColor="#000000"
             android:textSize="24sp"
@@ -35,6 +36,7 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/custom_input"
             android:ems="10"
+            android:fontFamily="@font/roboto_light"
             android:hint="Product/Service Name"
             android:inputType="text"
             android:paddingStart="12dp"
@@ -49,6 +51,7 @@
             android:background="@drawable/custom_input"
             android:clickable="false"
             android:ems="10"
+            android:fontFamily="@font/roboto_light"
             android:gravity="top"
             android:hint="Description"
             android:inputType="textMultiLine"
@@ -62,6 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:fontFamily="@font/roboto_medium"
             android:text="Product/Service Photo"
             android:textSize="16sp" />
 
@@ -84,6 +88,7 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
+                android:fontFamily="@font/roboto_bold"
                 android:text="Camera"
                 app:backgroundTint="#84A9AC" />
 
@@ -92,6 +97,7 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:fontFamily="@font/roboto_bold"
                 android:text="Gallery"
                 app:backgroundTint="#84A9AC" />
         </LinearLayout>
@@ -114,9 +120,12 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:background="#84A9AC"
+            android:fontFamily="@font/roboto_bold"
             android:gravity="center_horizontal"
             android:text="Create Product"
             app:backgroundTint="#84A9AC" />
+
+
 
     </LinearLayout>
 </ScrollView>

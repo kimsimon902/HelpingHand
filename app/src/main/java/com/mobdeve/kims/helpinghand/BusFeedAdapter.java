@@ -35,10 +35,10 @@ public class BusFeedAdapter extends RecyclerView.Adapter<BusFeedViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull BusFeedViewHolder holder, int position) {
-        holder.setUsername(this.data.get(position).getUsername());
+        holder.setUsername(this.data.get(position).getName());
         holder.setCaption(this.data.get(position).getCaption());
         holder.setImage("images/" + this.data.get(position).getImage_name());
-        holder.setdps(this.data.get(position).getUid());
+//        holder.setdps(this.data.get(position).getUid());
 
 
 

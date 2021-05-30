@@ -24,6 +24,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,8 @@ import java.util.Date;
 
 public class AddPost extends AppCompatActivity {
 
+
+    private ProgressBar progressBar;
     private EditText postEt, descEt;
     private ImageView postIv;
     private Button createPostBtn, camBtn, galBtn;
@@ -79,6 +82,7 @@ public class AddPost extends AppCompatActivity {
         createPostBtn = findViewById(R.id.addPostCreateBtn);
         camBtn = findViewById(R.id.addPostCamBtn);
         galBtn = findViewById(R.id.addPostGalBtn);
+        progressBar = findViewById(R.id.progressBar);
 
         postIv.setVisibility(View.GONE);
 
@@ -242,6 +246,7 @@ public class AddPost extends AppCompatActivity {
         String key = myRef.push().getKey();
         post = new Post(name, desc, image_name, username, uid, key);
         myRef.child(key).setValue(post);
+        progressBar.setVisibility(View.VISIBLE);
 
         Handler h = new Handler(){
             @Override

@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10sp"
+            android:fontFamily="@font/roboto_bold"
             android:text="Helping Hand"
             android:textColor="#0B0A0A" />
 

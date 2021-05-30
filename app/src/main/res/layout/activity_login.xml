@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="30sp"
+        android:fontFamily="@font/roboto_bold"
         android:text="Helping Hand"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -38,6 +39,7 @@
         android:drawableStart="@drawable/ic_email"
         android:drawablePadding="12dp"
         android:ems="10"
+        android:fontFamily="@font/roboto_light"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:paddingStart="12dp"
@@ -56,6 +58,7 @@
         android:drawableStart="@drawable/ic_lock"
         android:drawablePadding="12dp"
         android:ems="10"
+        android:fontFamily="@font/roboto_light"
         android:hint="Password"
         android:inputType="textPassword"
         android:paddingStart="12dp"
@@ -68,6 +71,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
+        android:fontFamily="@font/roboto_bold"
         android:text="Log In"
         app:backgroundTint="#84A9AC" />
 
@@ -86,6 +90,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginRight="5dp"
             android:clickable="false"
+            android:fontFamily="@font/roboto_light"
             android:gravity="center_horizontal"
             android:text="Don't have an account?" />
 
@@ -94,6 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
+            android:fontFamily="@font/roboto_bold"
             android:text="Sign up"
             android:textStyle="bold" />
     </LinearLayout>
