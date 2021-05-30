@@ -42,16 +42,12 @@ public class BusFeedViewHolder extends RecyclerView.ViewHolder {
         this.tv_comments = itemView.findViewById(R.id.tv_comments);
         tv_comments.setVisibility(View.GONE);
         this.tv_addComment = itemView.findViewById(R.id.tv_addComment);
+        tv_addComment.setVisibility(View.GONE);
         this.iv_image = itemView.findViewById(R.id.iv_image);
         this.iv_avatar = itemView.findViewById(R.id.iv_avatar);
         this.userdp = itemView.findViewById(R.id.userdp_Iv);
 
-        tv_addComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
 
     }
 

@@ -61,22 +61,6 @@ public class Comments extends AppCompatActivity {
         postcmnt = findViewById(R.id.postcomment_Tv);
         commentsRc = findViewById(R.id.comments_Rc);
 
-        postcmnt.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if(addcomment.getText().toString().equals("")){
-                    Toast.makeText(Comments.this, "You cant send an empty comment", Toast.LENGTH_SHORT).show();
-                } else{
-                    addComment();
-
-
-                }
-
-            }
-
-        });
-
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
@@ -111,6 +95,25 @@ public class Comments extends AppCompatActivity {
         });
 
 
+        postcmnt.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if(addcomment.getText().toString().equals("")){
+                    Toast.makeText(Comments.this, "You cant send an empty comment", Toast.LENGTH_SHORT).show();
+                } else{
+
+                    addComment();
+                    comments.clear();
+                    myAdapter.notifyDataSetChanged();
+
+                }
+
+            }
+
+        });
+
+
     }
 
     private void addComment(){
@@ -125,6 +128,7 @@ public class Comments extends AppCompatActivity {
         hashmap.put("comment_id", key);
 
         ref.child("comments").child(key).setValue(hashmap);
+
 
         comment = new Comment(addcomment.getText().toString(), uid, key, postid);
         comments.add(comment);

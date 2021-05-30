@@ -73,10 +73,8 @@ public class Feed extends AppCompatActivity {
         bio = i.getStringExtra("bio");
         isOwner = i.getStringExtra("isowner");
         dp = i.getStringExtra("dp");
-        uid = i.getStringExtra("uid");
 
-        System.out.println(uid);
-        System.out.println(isOwner);
+
 
         //usernameTv = findViewById(R.id.usernameTv);
         postsRv = findViewById(R.id.rv_posts);
@@ -134,6 +132,7 @@ public class Feed extends AppCompatActivity {
 
                 startActivity(intent);
                 finish();
+
 
             }
 
@@ -254,7 +253,9 @@ public class Feed extends AppCompatActivity {
                 Intent intent = new Intent(this,Login.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 SharedPreferences settings = this.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+
                 settings.edit().clear().commit();
+
                 startActivity(intent);
                 finish();
             default:
@@ -357,7 +358,7 @@ public class Feed extends AppCompatActivity {
                 }
 
                 myDpProcess();
-
+                username = userProfile.getusername();
             }
 
             @Override

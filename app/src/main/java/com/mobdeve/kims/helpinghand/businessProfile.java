@@ -60,13 +60,18 @@ public class businessProfile extends AppCompatActivity {
 
 
         Intent i = getIntent();
-        Bundle bundle = getIntent().getExtras();
+
 
         SharedPreferences sp = getSharedPreferences("MySharedPref2", MODE_PRIVATE);
 
         businessuid = sp.getString("businessuid", null);
 
-        Log.d("BUSINESS UID", sp.getString("businessuid", null));
+        if(i.hasExtra("businessuid")) {
+            businessuid = i.getStringExtra("businessuid");
+            System.out.println("there is intent for businessuid");
+        }
+
+        Log.d("current businessid ", businessuid);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
@@ -100,10 +105,9 @@ public class businessProfile extends AppCompatActivity {
 
         username = i.getStringExtra("username");
         bio = i.getStringExtra("bio");
-        System.out.println("username " + username);
-        System.out.println("bio " + bio);
+
         isOwner = i.getStringExtra("isowner");
-        System.out.println("isOwner " + isOwner);
+
         dp = i.getStringExtra("dp");
         email = i.getStringExtra("email");
 
@@ -133,32 +137,40 @@ public class businessProfile extends AppCompatActivity {
         this.myRef = this.firebaseDatabase.getReference("Posts");
         storageRef = FirebaseStorage.getInstance().getReference();
 
-        this.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<String> keys = new ArrayList<>();
-                for(DataSnapshot keyNode : snapshot.getChildren()){
-                    keys.add(keyNode.getKey());
-                    Post post = keyNode.getValue(Post.class);
-                    posts.add(post);
 
 
-                    myAdapter.notifyDataSetChanged();
-                }
+            this.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for(int i = 0; i < posts.size(); i++){
-                    if(posts.get(i).getUid().equals(businessuid)){
-                        businessPosts.add(posts.get(i));
+
+                    ArrayList<String> keys = new ArrayList<>();
+                    for (DataSnapshot keyNode : snapshot.getChildren()) {
+                        keys.add(keyNode.getKey());
+                        Post post = keyNode.getValue(Post.class);
+                        System.out.println(post.getUid());
+                        posts.add(post);
+                        System.out.println(posts.size());
+
+                        if (post.getUid().equals(businessuid)) {
+                            businessPosts.add(post);
+                            System.out.println("image file name is " + post.getImage_name());
+                        }
+
+
                     }
+                    myAdapter.notifyDataSetChanged();
+
+
+
                 }
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("Debug", "onDataChange: cancelled");
+                }
+            });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("Debug", "onDataChange: cancelled");
-            }
-        });
 
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -344,13 +356,11 @@ public class businessProfile extends AppCompatActivity {
 
         editor.putString("businessuid", businessuid);
 
-        Log.d("businessuid", businessuid);
-
 
         editor.apply();
         editor.commit();
 
-
+        myAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -359,9 +369,8 @@ public class businessProfile extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("MySharedPref2", MODE_PRIVATE);
         Intent i = getIntent();
 
-        businessuid = sp.getString("businessuid", null);
-
-
+        if(businessuid == null)
+            businessuid = sp.getString("businessuid", null);
 
         businessusername = i.getStringExtra("businessusername");
         username = i.getStringExtra("username");
@@ -372,21 +381,10 @@ public class businessProfile extends AppCompatActivity {
 
         dp = i.getStringExtra("dp");
         email = i.getStringExtra("email");
+
+        myAdapter.notifyDataSetChanged();
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        Intent i = getIntent();
-//        businessusername = i.getStringExtra("businessusername");
-//        businessuid = i.getStringExtra("businessuid");
-//        username = i.getStringExtra("username");
-//        bio = i.getStringExtra("bio");
-//        if(i.hasExtra("isowner")){
-//            isOwner = i.getStringExtra("isowner");
-//        }
-//
-//        dp = i.getStringExtra("dp");
-//        email = i.getStringExtra("email");
-//    }
+
+
 }

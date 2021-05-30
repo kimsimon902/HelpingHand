@@ -15,6 +15,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -241,13 +243,19 @@ public class AddPost extends AppCompatActivity {
         post = new Post(name, desc, image_name, username, uid, key);
         myRef.child(key).setValue(post);
 
+        Handler h = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                Intent intent = new Intent(AddPost.this, Feed.class);
+                intent.putExtra("username", username);
+                intent.putExtra("uid", uid);
+                intent.putExtra("post", post);
+                startActivity(intent);
+                finish();
+            }
+        };
 
-        Intent intent = new Intent(AddPost.this, Feed.class);
-        intent.putExtra("username", username);
-        intent.putExtra("uid", uid);
-        intent.putExtra("post", post);
-        startActivity(intent);
-        finish();
+        h.sendEmptyMessageDelayed(0, 3000);
     }
 
 

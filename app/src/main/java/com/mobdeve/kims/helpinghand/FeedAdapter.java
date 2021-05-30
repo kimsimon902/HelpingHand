@@ -1,7 +1,11 @@
 package com.mobdeve.kims.helpinghand;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +21,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
 
     private ArrayList<Post> data;
     private String uid, isOwner;
+    private Context context;
 
     public FeedAdapter(ArrayList<Post> data, String uid, String isOwner) {
         this.data = data;
@@ -40,6 +45,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull FeedViewHolder holder, int position) {
+
+
         holder.setUsername(this.data.get(position).getUsername());
         holder.setCaption(this.data.get(position).getCaption());
         holder.setImage("images/" + this.data.get(position).getImage_name());
@@ -67,17 +74,26 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> {
         holder.listen(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), businessProfile.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("businessusernmae", data.get(position).getUsername());
-                bundle.putString("businessuid", data.get(position).getUid());
-                bundle.putString("username", data.get(position).getUsername());
-                bundle.putString("isowner", isOwner);
-                i.putExtras(bundle);
 
 
-                v.getContext().startActivity(i);
 
+                Handler h = new Handler(){
+                    @Override
+                    public void handleMessage(@NonNull Message msg) {
+                        Intent i = new Intent(v.getContext(), businessProfile.class);
+
+                        i.putExtra("businessusernmae", data.get(position).getUsername());
+                        i.putExtra("businessuid", data.get(position).getUid());
+                        Log.d("businessuid", data.get(position).getUid());
+                        i.putExtra("username", data.get(position).getUsername());
+                        i.putExtra("isowner", isOwner);
+
+                        v.getContext().startActivity(i);
+
+
+                    }
+                };
+                h.sendEmptyMessageDelayed(0, 2000);
             }
         });
 
